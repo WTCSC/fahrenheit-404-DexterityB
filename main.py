@@ -1,13 +1,16 @@
 print("Hello, I am the temperature conversion robot")
 convert_yn = input("Would you like to convert some temperature measurements? [yes/no] ").lower()
 
+#initial question error handling
 while convert_yn != "yes":
     print("Ok, type yes if you change your mind")
     convert_yn = input("")
     convert_yn = convert_yn.lower()
 
+#loop for more temperature conversions
 again = "yes"
 while again == "yes":
+    #units with error handling
     input_unit = input("What unit are you converting from? [fahrenheit/celsius/kelvin] ").capitalize()
     while input_unit != "Fahrenheit" and input_unit != "Celsius" and input_unit != "Kelvin":
         print("That's not one of the options. Perhaps you mispelled something?")
@@ -20,9 +23,20 @@ while again == "yes":
         print("")
         output_unit = input("What unit are you converting to? [fahrenheit/celsius/kelvin] ").capitalize()
 
-    input_value = int(input("Please input the number that requires conversion "))
+    #conversion value with error handling
+    input_value = input("Please input the number that requires conversion ")
+    while True:
+        try:
+            input_value = int(input_value)
+            break
+        except:
+            print("That is not a number")
+            print("")
+            input_value = input("Please input the number that requires conversion ")
+
     output_value = None
 
+    #The actual conversion
     match input_unit:
         case "Fahrenheit":
             match output_unit:        
@@ -47,8 +61,10 @@ while again == "yes":
 
     output_value = round(output_value, 3)
 
+    #Prints the result
     print("")
     print(f"{input_value} degrees {input_unit} is equal to {output_value} degrees {output_unit}")
 
+    #Asks if you want to repeat
     again = input("Would you like to convert some more temperature measurements? [yes/no] ").lower()
     print("")
